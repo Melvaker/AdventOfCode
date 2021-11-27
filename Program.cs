@@ -1,0 +1,12 @@
+﻿using System;
+
+namespace AdventOfCode
+{
+    class Program
+    {
+        static void Main()
+        {
+            AoC2015.RunDayFour();
+        }
+    }
+}
