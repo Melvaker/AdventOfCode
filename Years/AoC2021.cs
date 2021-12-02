@@ -71,6 +71,87 @@ namespace AdventOfCode
         }
         #endregion
 
+        #region DayTwo
+        public static void RunDayTwo()
+        {
+            WriteLine("---Tests---");
+            WriteLine(DayTwo("Data\\2021\\DayTwoTest1.txt") + Environment.NewLine);
+
+            //Results
+            WriteLine("---Results---");
+            WriteLine(DayTwo("Data\\2021\\DayTwo.txt") + Environment.NewLine);
+        }
+
+        private static int DayTwo(string path)
+        {
+            //----Part Two----
+            int aim = 0;
+            int depth = 0;
+            int distance = 0;
+            int displacement;
+
+            List<string> instructions = FileIO.ReadFileByLines(path);
+
+            foreach (var instruction in instructions)
+            {
+                string[] details = instruction.Split(" ");
+
+                switch (details[0].ToLower())
+                {
+                    case "forward":
+                        distance += Convert.ToInt32(details[1]);
+                        depth += Convert.ToInt32(details[1]) * aim;
+                        break;
+                    case "up":
+                        aim -= Convert.ToInt32(details[1]);
+                        break;
+                    case "down":
+                        aim += Convert.ToInt32(details[1]);
+                        break;
+                    default:
+                        Console.WriteLine("Error: unknown instruction");
+                        break;
+                }
+            }
+
+            displacement = depth * distance;
+
+
+
+            //----Part One----
+            //int depth = 0;
+            //int distance = 0;
+            //int displacement;
+
+            //List<string> instructions = FileIO.ReadFileByLines(path);
+
+            //foreach (var instruction in instructions)
+            //{
+            //    string[] details = instruction.Split(" "); 
+
+            //    switch (details[0].ToLower())
+            //    {
+            //        case "forward":
+            //            distance += Convert.ToInt32(details[1]);
+            //            break;
+            //        case "up":
+            //            depth -= Convert.ToInt32(details[1]);
+            //            break;
+            //        case "down":
+            //            depth += Convert.ToInt32(details[1]);
+            //            break;
+            //        default:
+            //            Console.WriteLine("Error: unknown instruction");
+            //            break;
+            //    }
+            //}
+
+            //displacement = depth * distance;
+
+            return displacement;
+        }
+        #endregion
+
         #endregion
     }
 }
