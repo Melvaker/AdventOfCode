@@ -13,12 +13,12 @@ namespace AdventOfCode
         {
             //Tests
             WriteLine("---Tests---");
-            WriteLine(DayOne("Data\\DayOneTest1.txt", true));
-            WriteLine(DayOne("Data\\DayOneTest2.txt", true));
+            WriteLine(DayOne("Data\\2015\\DayOneTest1.txt", true));
+            WriteLine(DayOne("Data\\2015\\DayOneTest2.txt", true));
 
             //Result
             WriteLine("---Results---");
-            WriteLine(DayOne("Data\\DayOne.txt", false));
+            WriteLine(DayOne("Data\\2015\\DayOne.txt", false));
         }
 
         private static int DayOne(string path, bool isTest)
@@ -70,12 +70,12 @@ namespace AdventOfCode
         {
             //Tests
             WriteLine("---Tests---");
-            WriteLine(DayTwo("Data\\DayTwoTest1.txt", true));
-            WriteLine(DayTwo("Data\\DayTwoTest2.txt", true));
+            WriteLine(DayTwo("Data\\2015\\DayTwoTest1.txt", true));
+            WriteLine(DayTwo("Data\\2015\\DayTwoTest2.txt", true));
 
             //Results
             WriteLine("---Results---");
-            WriteLine(DayTwo("Data\\DayTwo.txt", false));
+            WriteLine(DayTwo("Data\\2015\\DayTwo.txt", false));
         }
 
         private static int DayTwo(string path, bool test)
@@ -122,13 +122,13 @@ namespace AdventOfCode
         public static void RunDayThree()
         {
             WriteLine("---Tests---");
-            WriteLine(DayThree("Data\\DayThreeTest1.txt", true));
-            WriteLine(DayThree("Data\\DayThreeTest2.txt", true));
-            WriteLine(DayThree("Data\\DayThreeTest3.txt", true) + Environment.NewLine);
+            WriteLine(DayThree("Data\\2015\\DayThreeTest1.txt", true));
+            WriteLine(DayThree("Data\\2015\\DayThreeTest2.txt", true));
+            WriteLine(DayThree("Data\\2015\\DayThreeTest3.txt", true) + Environment.NewLine);
 
             //Results
             //WriteLine("---Results---");
-            WriteLine(DayThree("Data\\DayThree.txt", false) + Environment.NewLine);
+            WriteLine(DayThree("Data\\2015\\DayThree.txt", false) + Environment.NewLine);
         }
 
         private static int DayThree(string path, bool isTest)
@@ -206,19 +206,19 @@ namespace AdventOfCode
         public static void RunDayFour()
         {
             WriteLine("---Tests---");
-            WriteLine(DayThree("Data\\DayFourTest1.txt", true));
-            WriteLine(DayThree("Data\\DayFourTest2.txt", true));
-            WriteLine(DayThree("Data\\DayFourTest3.txt", true) + Environment.NewLine);
+            WriteLine(DayThree("Data\\2015\\DayFourTest1.txt", true));
+            WriteLine(DayThree("Data\\2015\\DayFourTest2.txt", true));
+            WriteLine(DayThree("Data\\2015\\DayFourTest3.txt", true) + Environment.NewLine);
 
             //Results
-            //WriteLine("---Results---");
-            WriteLine(DayThree("Data\\DayFour.txt", false) + Environment.NewLine);
+            WriteLine("---Results---");
+            WriteLine(DayThree("Data\\2015\\DayFour.txt", false) + Environment.NewLine);
         }
 
-        private static void DayFour()
-        {
+        //private static void DayFour()
+        //{
 
-        }
+        //}
         #endregion
 
         #endregion
