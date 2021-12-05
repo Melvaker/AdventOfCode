@@ -109,7 +109,7 @@ namespace AdventOfCode
                         aim += Convert.ToInt32(details[1]);
                         break;
                     default:
-                        Console.WriteLine("Error: unknown instruction");
+                        WriteLine("Error: unknown instruction");
                         break;
                 }
             }
@@ -141,7 +141,7 @@ namespace AdventOfCode
             //            depth += Convert.ToInt32(details[1]);
             //            break;
             //        default:
-            //            Console.WriteLine("Error: unknown instruction");
+            //            WriteLine("Error: unknown instruction");
             //            break;
             //    }
             //}
@@ -149,6 +149,324 @@ namespace AdventOfCode
             //displacement = depth * distance;
 
             return displacement;
+        }
+        #endregion
+
+        #region DayThree
+        public static void RunDayThree()
+        {
+            WriteLine("---Tests---");
+            WriteLine(DayThree("Data\\2021\\DayThreeTest1.txt") + Environment.NewLine);
+
+            //Results
+            WriteLine("---Results---");
+            WriteLine(DayThree("Data\\2021\\DayThree.txt") + Environment.NewLine);
+        }
+
+        private static int DayThree(string path)
+        {
+            //----Part Two----
+            int lifeSupportRating;
+
+            List<string> reportData = FileIO.ReadFileByLines(path);
+            int length = reportData[0].Length - 1;
+
+            for (int i = length; i >= 0; i--)
+            {
+                int one = 0;
+                int zero = 0;
+                int oxygenResult = 0;
+
+                foreach (var data in reportData)
+                {
+                    int temp = Convert.ToInt32(data, 2);
+
+                    if (((1 << i) & temp) > 0)
+                    {
+                        one++;
+                    }
+                    else
+                    {
+                        zero++;
+                    }
+                }
+
+                if (one == zero || one > zero)
+                {
+                    oxygenResult = (1 << i);
+                }
+
+                for (int ii = reportData.Count - 1; ii >= 0; ii--)
+                {
+                    int temp = Convert.ToInt32(reportData[ii], 2);
+                    int checkValue;
+
+                    if (oxygenResult == 0)
+                    {
+                        temp = ~temp;
+                        checkValue = 1 << i;
+                    }
+                    else
+                    {
+                        checkValue = oxygenResult;
+                    }
+
+                    if (0 == (temp & checkValue))
+                    {
+                        reportData.RemoveAt(ii);
+                    }
+                }
+                
+                if (reportData.Count <= 1)
+                {
+                    break;
+                }
+            }
+
+            lifeSupportRating = Convert.ToInt32(reportData[0], 2);
+
+            reportData = FileIO.ReadFileByLines(path);
+
+            for (int i = length; i >= 0; i--)
+            {
+                int one = 0;
+                int zero = 0;
+                int carbonResult = 0;
+
+                foreach (var data in reportData)
+                {
+                    int temp = Convert.ToInt32(data, 2);
+
+                    if (((1 << i) & temp) > 0)
+                    {
+                        one++;
+                    }
+                    else
+                    {
+                        zero++;
+                    }
+                }
+
+                if (one < zero)
+                {
+                    carbonResult = (1 << i);
+                }
+
+                for (int ii = reportData.Count - 1; ii >= 0; ii--)
+                {
+                    int temp = Convert.ToInt32(reportData[ii], 2);
+                    int checkValue;
+
+                    if (carbonResult == 0)
+                    {
+                        temp = ~temp;
+                        checkValue = 1 << i;
+                    }
+                    else
+                    {
+                        checkValue = carbonResult;
+                    }
+                    
+                    if (0 == (temp & checkValue))
+                    {
+                        reportData.RemoveAt(ii);
+                    }
+                }
+
+                if (reportData.Count <= 1)
+                {
+                    break;
+                }
+            }
+
+            lifeSupportRating *= Convert.ToInt32(reportData[0], 2);
+            
+            return lifeSupportRating;
+
+
+
+            //----Part One----
+            //int gammaRate = 0;
+            //int epsilonRate = 0;
+            //int powerConsumption;
+
+            //List<string> reportData = FileIO.ReadFileByLines(path);
+            //int length = reportData[0].Length;
+
+            //for (int i = 0; i < length; i++)
+            //{
+            //    int one = 0;
+            //    int zero = 0;
+
+            //    foreach (var data in reportData)
+            //    {
+            //        int temp = Convert.ToInt32(data, 2); 
+
+            //        if (((1 << i) & temp) > 0)
+            //        {
+            //            one++;
+            //        }
+            //        else
+            //        {
+            //            zero++;
+            //        }
+            //    }
+
+            //    if (one > zero)
+            //    {
+            //        gammaRate = gammaRate | (1 << i);
+            //    }
+            //    else
+            //    {
+            //        epsilonRate = epsilonRate | (1 << i);
+            //    }
+            //}
+
+            //powerConsumption = gammaRate * epsilonRate;
+
+            //return powerConsumption;
+        }
+        #endregion
+
+        #region DayFour
+        public static void RunDayFour()
+        {
+            //Tests
+            WriteLine("---Tests---");
+            WriteLine(DayFour("Data\\2021\\DayFourTest1.txt") + Environment.NewLine);
+
+            //Results
+            WriteLine("---Results---");
+            WriteLine(DayFour("Data\\2021\\DayFour.txt") + Environment.NewLine);
+        }
+
+        private static int DayFour(string path)
+        {
+            //----Part Two----
+            List<string> data = FileIO.ReadFileByLines(path);
+            List<BingoBoard> boards = new();
+            string[] calls = data[0].Split(",");
+            bool lastBoard = false;
+            int lastCall = 0;
+            int winningBoard = -1;
+            int numberBoards;
+
+            data.RemoveAt(0);
+
+            int length = data.Count / 6;
+
+            for (int i = 0; i < length; i++)
+            {
+                string temp = "";
+
+                data.RemoveAt(0);
+
+                for (int ii = 0; ii < 5; ii++)
+                {
+                    temp += data[0];
+                    temp += " ";
+
+                    data.RemoveAt(0);
+                }
+
+                boards.Add(new BingoBoard(temp));
+            }
+
+            foreach (var call in calls)
+            {
+                foreach (var board in boards)
+                {
+                    board.CheckCall(call);
+                }
+
+                numberBoards = boards.Count;
+
+                for (int i = 0; i < numberBoards; i++)
+                {
+
+                    if (boards[i].CheckForBingo() && boards.Count > 1)
+                    {
+                        boards.RemoveAt(i);
+                        i--;
+                        numberBoards--;
+                    }
+                    else if (boards[i].CheckForBingo())
+                    {
+                        lastBoard = true;
+                        lastCall = Convert.ToInt32(call);
+                        break;
+                    }
+                }
+
+                if (lastBoard)
+                {
+                    winningBoard = 0;
+                    break;
+                }
+            }
+
+
+
+            //----Part One----
+            //List<string> data = FileIO.ReadFileByLines(path);
+            //List<BingoBoard> boards = new();
+            //string[] calls = data[0].Split(",");
+            //bool hasWinner = false;
+            //int lastCall = 0;
+            //int winningBoard = -1;
+
+            //data.RemoveAt(0);
+
+            //int length = data.Count / 6;
+
+            //for (int i = 0; i < length; i++)
+            //{
+            //    string temp = ""; 
+
+            //    data.RemoveAt(0);
+
+            //    for (int ii = 0; ii < 5; ii++)
+            //    {
+            //        temp += data[0];
+            //        temp += " ";
+
+            //        data.RemoveAt(0);
+            //    }
+
+            //    boards.Add(new BingoBoard(temp));
+            //}
+
+            //foreach (var call in calls)
+            //{
+            //    foreach (var board in boards)
+            //    {
+            //        board.CheckCall(call);
+            //    }
+
+            //    foreach (var board in boards)
+            //    {
+            //        hasWinner = board.CheckForBingo();
+
+            //        if (hasWinner)
+            //        {
+            //            winningBoard = boards.IndexOf(board);
+            //            lastCall = Convert.ToInt32(call);
+            //            break;
+            //        }
+            //    }
+
+            //    if (hasWinner)
+            //    {
+            //        break;
+            //    }
+            //}
+
+            if (!lastBoard)
+            {
+                return 0;
+            }
+
+            return boards[winningBoard].ScoreMultiplier() * lastCall;
         }
         #endregion
 
