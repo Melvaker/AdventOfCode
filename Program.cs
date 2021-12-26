@@ -7,7 +7,7 @@ namespace AdventOfCode
         static void Main()
         {
             //AoC2015.RunDayFour();
-            AoC2021.RunDayFour();
+            AoC2021.RunDayEight();
         }
     }
 }

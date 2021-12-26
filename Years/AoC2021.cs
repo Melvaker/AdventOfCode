@@ -470,6 +470,477 @@ namespace AdventOfCode
         }
         #endregion
 
+        #region DayFive
+        public static void RunDayFive()
+        {
+            //Tests
+            WriteLine("---Tests---");
+            WriteLine(DayFive("Data\\2021\\DayFiveTest1.txt") + Environment.NewLine);
+
+            //Results
+            WriteLine("---Tests---");
+            WriteLine(DayFive("Data\\2021\\DayFive.txt") + Environment.NewLine);
+        }
+
+        private static int DayFive(string path)
+        {
+            //----Part Two----
+            List<string> rawLines = FileIO.ReadFileByLines(path);
+            List<Line> lines = new();
+
+            int maxX = 0;
+            int maxY = 0;
+
+            int numberOfIntersections = 0;
+
+            foreach (var line in rawLines)
+            {
+                string[] temp = line.Split(" -> ");
+                TwoDimensionCoordinates start = new();
+                TwoDimensionCoordinates end = new();
+
+                start.X = Convert.ToInt32(temp[0].Split(",")[0]);
+                start.Y = Convert.ToInt32(temp[0].Split(",")[1]);
+
+                end.X = Convert.ToInt32(temp[1].Split(",")[0]);
+                end.Y = Convert.ToInt32(temp[1].Split(",")[1]);
+
+                lines.Add(new Line(start, end));
+
+                if (maxX < start.X)
+                {
+                    maxX = start.X;
+                }
+                else if (maxX < end.X)
+                {
+                    maxX = end.X;
+                }
+
+                if (maxY < start.Y)
+                {
+                    maxY = start.Y;
+                }
+                else if (maxY < end.Y)
+                {
+                    maxY = end.Y;
+                }
+            }
+
+            for (int i = 0; i <= maxX; i++)
+            {
+                for (int ii = 0; ii <= maxY; ii++)
+                {
+                    int counter = 0;
+
+                    foreach (var line in lines)
+                    {
+                        if (line.StartPoint.X == line.EndPoint.X)
+                        {
+                            if (line.StartPoint.X == i)
+                            {
+                                if (line.StartPoint.Y <= ii && line.EndPoint.Y >= ii)
+                                {
+                                    counter++;
+                                }
+                                else if (line.EndPoint.Y <= ii && line.StartPoint.Y >= ii)
+                                {
+                                    counter++;
+                                }
+                            }
+                        }
+                        else if (line.StartPoint.Y == line.EndPoint.Y)
+                        {
+                            if (line.StartPoint.Y == ii)
+                            {
+                                if (line.StartPoint.X <= i && line.EndPoint.X >= i)
+                                {
+                                    counter++;
+                                }
+                                else if (line.EndPoint.X <= i && line.StartPoint.X >= i)
+                                {
+                                    counter++;
+                                }
+                            }
+                        }
+                        else if (i >= line.StartPoint.X && i <= line.EndPoint.X)
+                        {
+                            if (ii >= line.StartPoint.Y && ii <= line.EndPoint.Y)
+                            {
+                                if (Math.Abs(i - line.StartPoint.X) == Math.Abs(ii - line.StartPoint.Y))
+                                {
+                                    counter++;
+                                }
+                            }
+                            else if (ii <= line.StartPoint.Y && ii >= line.EndPoint.Y)
+                            {
+                                if (Math.Abs(i - line.StartPoint.X) == Math.Abs(ii - line.StartPoint.Y))
+                                {
+                                    counter++;
+                                }
+                            }
+                        }
+                        else if (i <= line.StartPoint.X && i >= line.EndPoint.X)
+                        {
+                            if (ii >= line.StartPoint.Y && ii <= line.EndPoint.Y)
+                            {
+                                if (Math.Abs(i - line.StartPoint.X) == Math.Abs(ii - line.StartPoint.Y))
+                                {
+                                    counter++;
+                                }
+                            }
+                            else if (ii <= line.StartPoint.Y && ii >= line.EndPoint.Y)
+                            {
+                                if (Math.Abs(i - line.StartPoint.X) == Math.Abs(ii - line.StartPoint.Y))
+                                {
+                                    counter++;
+                                }
+                            }
+                        }
+                    }
+
+                    if (counter > 1)
+                    {
+                        numberOfIntersections++;
+                    }
+                }
+            }
+
+            return numberOfIntersections;
+
+
+
+
+            //----Part One----
+            //List<string> rawLines = FileIO.ReadFileByLines(path);
+            //List<Line> lines = new();
+
+            //int maxX = 0;
+            //int maxY = 0;
+
+            //int numberOfIntersections = 0;
+
+            //foreach (var line in rawLines)
+            //{
+            //    string[] temp = line.Split(" -> ");
+            //    TwoDimensionCoordinates start = new();
+            //    TwoDimensionCoordinates end = new();
+
+            //    start.X = Convert.ToInt32(temp[0].Split(",")[0]);
+            //    start.Y = Convert.ToInt32(temp[0].Split(",")[1]);
+
+            //    end.X = Convert.ToInt32(temp[1].Split(",")[0]);
+            //    end.Y = Convert.ToInt32(temp[1].Split(",")[1]);
+
+            //    lines.Add(new Line(start, end));
+
+            //    if (maxX < start.X)
+            //    {
+            //        maxX = start.X;
+            //    }
+            //    else if (maxX < end.X)
+            //    {
+            //        maxX = end.X;
+            //    }
+
+            //    if (maxY < start.Y)
+            //    {
+            //        maxY = start.Y;
+            //    }
+            //    else if (maxY < end.Y)
+            //    {
+            //        maxY = end.Y;
+            //    }
+            //}
+
+            //for (int i = 0; i <= maxX; i++)
+            //{
+            //    for (int ii = 0; ii <= maxY; ii++)
+            //    {
+            //        int counter = 0;
+
+            //        foreach (var line in lines)
+            //        {
+            //            if (line.StartPoint.X == line.EndPoint.X)
+            //            {
+            //                if (line.StartPoint.X == i)
+            //                {
+            //                    if (line.StartPoint.Y <= ii && line.EndPoint.Y >= ii)
+            //                    {
+            //                        counter++;
+            //                    }
+            //                    else if (line.EndPoint.Y <= ii && line.StartPoint.Y>= ii)
+            //                    {
+            //                        counter++;
+            //                    }
+            //                }
+            //            }
+            //            else if (line.StartPoint.Y == line.EndPoint.Y)
+            //            {
+            //                if (line.StartPoint.Y == ii)
+            //                {
+            //                    if (line.StartPoint.X <= i && line.EndPoint.X >= i)
+            //                    {
+            //                        counter++;
+            //                    }
+            //                    else if (line.EndPoint.X <= i && line.StartPoint.X >= i)
+            //                    {
+            //                        counter++;
+            //                    }
+            //                }
+            //            }
+            //        }
+
+            //        if (counter > 1)
+            //        {
+            //            numberOfIntersections++;
+            //        }
+            //    }
+            //}
+
+            //return numberOfIntersections;
+        }
+        #endregion
+
+        #endregion
+
+        #region ===== Week Two =====
+
+        #region DaySix
+        public static void RunDaySix()
+        {
+            //Tests
+            WriteLine("---Tests---");
+            WriteLine(DaySix("Data\\2021\\DaySixTest1.txt", 18));
+            WriteLine(DaySix("Data\\2021\\DaySixTest1.txt", 80));
+            WriteLine(DaySix("Data\\2021\\DaySixTest1.txt", 256) + Environment.NewLine);
+
+            //Results
+            WriteLine("---Results---");
+            WriteLine(DaySix("Data\\2021\\DaySix.txt", 80));
+            WriteLine(DaySix("Data\\2021\\DaySix.txt", 256) + Environment.NewLine);
+        }
+
+        private static long DaySix(string path, int days)
+        {
+            string input = FileIO.ReadFile(path);
+            long numberFish = 0;
+            string[] starterFish = input.Split(",");
+            long[] lanternFish = new long[10];
+
+            foreach (var fish in starterFish)
+            {
+                lanternFish[Convert.ToInt64(fish)]++;
+            }
+
+            do
+            {
+                lanternFish[9] = lanternFish[0];
+                lanternFish[7] += lanternFish[0];
+
+                for (int i = 0; i <  lanternFish.Length - 1; i++)
+                {
+                    lanternFish[i] = lanternFish[i + 1];
+                }
+
+                days--;
+            } while (days > 0);
+
+            for (int i = 0; i < lanternFish.Length - 1; i++)
+            {
+                numberFish += lanternFish[i];
+            }
+
+            return numberFish;
+
+            //----Old Method----
+            //string fishInput = FileIO.ReadFile(path);
+            //List<int> newList = new();
+            //List<int> lanternFish = new();
+
+            //string[] temp = fishInput.Split(",");
+            //for (int i = 0; i < temp.Length; i++)
+            //{
+            //    lanternFish.Add(Convert.ToInt32(temp[i]));
+            //}
+
+            //do
+            //{
+            //    foreach (var age in lanternFish)
+            //    {
+            //        if (age == 0)
+            //        {
+            //            newList.Add(8);
+            //            newList.Add(6);
+            //        }
+            //        else
+            //        {
+            //            newList.Add(age - 1);
+            //        }
+            //    }
+
+            //    lanternFish.Clear();
+            //    lanternFish.AddRange(newList);
+            //    newList.Clear();
+
+            //    days--;
+            //} while (days > 0);
+
+            //return lanternFish.Count;
+        }
+        #endregion
+
+        #region DaySeven
+        public static void RunDaySeven()
+        {
+            //Tests
+            WriteLine("---Tests---");
+            WriteLine(DaySeven("Data\\2021\\DaySevenTest1.txt") + Environment.NewLine);
+
+            //Results
+            WriteLine("---Results---");
+            WriteLine(DaySeven("Data\\2021\\DaySeven.txt") + Environment.NewLine);
+        }
+
+        private static int DaySeven(string path)
+        {
+            //---Part Two---
+            string input = FileIO.ReadFile(path);
+            string[] inputArray = input.Split(",");
+            List<int> crabs = new();
+            float positionPrecise = 0f;
+            int positionRounded;
+            int fuelUsed = 0;
+
+            foreach (var crab in inputArray)
+            {
+                crabs.Add(Convert.ToInt32(crab));
+            }
+
+            crabs.Sort();
+            
+            foreach (var crabPosition in crabs)
+            {
+                positionPrecise += crabPosition;
+            }
+
+            positionPrecise /= crabs.Count;
+
+            //I am not sure why i needed to use the two different casting methods to get a correct answer.
+            //Rounding up gives the correct answer for the sample,
+            //  but type casting gives the correct answer for the problem.
+            //I probably need to look into how the conversions are taking place.
+            positionRounded = (int)positionPrecise;
+            //positionRounded = Convert.ToInt32(positionPrecise);
+
+            foreach (var moves in crabs)
+            {
+                for (int i = 1; i <= Math.Abs(moves - positionRounded); i++)
+                {
+                    fuelUsed += i;
+                }
+            }
+
+            return fuelUsed;
+
+
+
+
+            //---Part One---
+            //string input = FileIO.ReadFile(path);
+            //string[] inputArray = input.Split(",");
+            //List<int> crabs = new();
+            //int position;
+            //int fuelUsed = 0;
+
+            //foreach(var crab in inputArray)
+            //{
+            //    crabs.Add(Convert.ToInt32(crab));
+            //}
+
+            //crabs.Sort();
+
+            //if (crabs.Count % 2 == 1)
+            //{
+            //    position = crabs[crabs.Count / 2 + 1];
+            //}
+            //else
+            //{
+            //    position = crabs[crabs.Count / 2];
+            //}
+
+            //foreach (var moves in crabs)
+            //{
+            //    fuelUsed += Math.Abs(moves - position);
+            //}
+
+            //return fuelUsed;
+        }
+        #endregion
+
+        #region DayEight
+        public static void RunDayEight()
+        {
+            //Tests
+            WriteLine("---Tests---");
+            WriteLine(DayEight("Data\\2021\\DayEightTest1.txt"));
+            WriteLine(DayEight("Data\\2021\\DayEightTest2.txt") + Environment.NewLine);
+
+            //Results
+            WriteLine("---Results---");
+            WriteLine(DayEight("Data\\2021\\DayEight.txt") + Environment.NewLine);
+        }
+
+        private static int DayEight(string path)
+        {
+            //----Part Two----
+
+
+            return 0;
+
+
+
+
+            //----Part One----
+            //List<string> data = FileIO.ReadFileByLines(path);
+            //int[] digits = { 0, 0, 0, 0, 0, 0, 0 };
+            //int number = 0;
+
+            //foreach (var line in data)
+            //{
+            //    string[] temp = line.Split("|");
+            //    temp = temp[1].Split(" ");
+
+            //    foreach (var entry in temp)
+            //    {
+            //        switch (entry.Length)
+            //        {
+            //            case 2:
+            //                digits[1]++;
+            //                break;
+            //            case 3:
+            //                digits[2]++;
+            //                break;
+            //            case 4:
+            //                digits[3]++;
+            //                break;
+            //            case 7:
+            //                digits[6]++;
+            //                break;
+            //            default:
+            //                break;
+            //        }
+            //    }
+            //}
+
+            //foreach (var count in digits)
+            //{
+            //    number += count;
+            //}
+
+            //return number;
+        }
+        #endregion
+
         #endregion
     }
 }
