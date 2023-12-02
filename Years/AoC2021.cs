@@ -612,7 +612,7 @@ namespace AdventOfCode
 
             //----Part One----
             //List<string> rawLines = FileIO.ReadFileByLines(path);
-            //List<Line> lines = new();
+            //List<Game> lines = new();
 
             //int maxX = 0;
             //int maxY = 0;
@@ -631,7 +631,7 @@ namespace AdventOfCode
             //    end.X = Convert.ToInt32(temp[1].Split(",")[0]);
             //    end.Y = Convert.ToInt32(temp[1].Split(",")[1]);
 
-            //    lines.Add(new Line(start, end));
+            //    lines.Add(new Game(start, end));
 
             //    if (maxX < start.X)
             //    {
@@ -894,8 +894,7 @@ namespace AdventOfCode
         {
             //----Part Two----
 
-
-            return 0;
+            return Int32.Parse(path);
 
 
 
